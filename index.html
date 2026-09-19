@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>La Roue des 3 Brasseurs — Tourville-la-Rivière</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Montserrat:wght@500;600;700&display=swap');
+
+:root{
+  --black:#090a09; --panel:#111310eF; --cream:#f5ead7; --gold:#d9b77b;
+  --gold2:#f0d39b; --white:#f7f5ef; --muted:#c3beb3;
+  --line:rgba(245,234,215,.42);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#080908;color:var(--white)}
+body{
+  font-family:"DM Sans",sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+body:before{
+  content:"";position:fixed;inset:0;z-index:-3;
+  background:
+   radial-gradient(circle at 15% 20%,rgba(95,75,45,.45),transparent 25%),
+   radial-gradient(circle at 85% 8%,rgba(120,91,53,.35),transparent 25%),
+   linear-gradient(120deg,#171713,#080908 45%,#14110d);
+}
+body:after{
+  content:"";position:fixed;inset:0;z-index:-2;
+  background:
+   radial-gradient(circle at 20% 10%,#fff4 0 3px,transparent 4px),
+   radial-gradient(circle at 78% 18%,#fff3 0 4px,transparent 5px),
+   radial-gradient(circle at 70% 80%,#d4a76225 0 90px,transparent 180px);
+  filter:blur(1px);
+}
+.app{width:min(100%,430px);min-height:100vh;margin:auto;padding:16px 14px 18px;display:flex;flex-direction:column}
+.panel{
+  position:relative;flex:1;min-height:calc(100vh - 34px);
+  border:1px solid var(--line);border-radius:9px;
+  background:
+    linear-gradient(180deg,rgba(8,9,8,.82),rgba(8,9,8,.95)),
+    radial-gradient(circle at 80% 20%,rgba(160,120,70,.12),transparent 32%);
+  overflow:hidden;box-shadow:0 18px 65px #000b;
+}
+.panel:before{
+ content:"";position:absolute;inset:0;pointer-events:none;opacity:.2;
+ background:linear-gradient(135deg,transparent 0 48%,rgba(255,255,255,.08) 49%,transparent 50%),
+            radial-gradient(ellipse at 0 20%,#27402b 0 2%,transparent 25%);
+}
+.content{position:relative;z-index:1;padding:28px 28px 24px;min-height:100%;display:flex;flex-direction:column}
+.header{text-align:center;position:relative;margin-bottom:20px}
+.menu{position:absolute;right:0;top:1px;width:24px;height:20px;display:flex;flex-direction:column;justify-content:space-between}
+.menu i{height:2px;background:var(--gold2);width:23px;display:block}
+.logoMark{
+ width:66px;height:66px;border:3px solid var(--gold2);border-radius:50% 50% 48% 48%;
+ margin:0 auto 8px;display:flex;align-items:flex-end;justify-content:center;
+ color:var(--gold2);font:700 30px Montserrat,sans-serif;letter-spacing:-.12em;
+ position:relative;
+}
+.logoMark:after{content:"";position:absolute;left:12px;right:12px;bottom:-3px;height:9px;background:var(--panel);border-top:2px solid var(--gold2)}
+.logoName{font:700 24px Montserrat,sans-serif;letter-spacing:.02em}
+.location{font-size:9px;letter-spacing:.22em;margin-top:5px;color:var(--gold2)}
+.sep{width:46px;height:1px;background:var(--gold);margin:18px auto 0}
+.screen{display:none;flex:1;flex-direction:column;align-items:center}
+.screen.active{display:flex}
+.hero{text-align:center;margin-top:54px}
+.hero .thin{font:500 38px Montserrat,sans-serif;letter-spacing:.11em}
+.hero .strong{font:700 40px Montserrat,sans-serif;letter-spacing:.03em;margin-top:3px}
+.shortline{height:2px;width:35px;background:var(--gold);margin:22px auto}
+.copy{text-align:center;color:var(--white);font-size:15px;line-height:1.65;max-width:285px}
+.reviewBtn,.continueBtn,.homeBtn{
+ width:100%;border-radius:35px;padding:15px 18px;display:flex;align-items:center;justify-content:space-between;
+ font:600 14px DM Sans;cursor:pointer;transition:.2s;
+}
+.reviewBtn{margin-top:28px;background:rgba(16,17,15,.92);border:1px solid rgba(245,234,215,.48);color:#fff}
+.reviewBtn .g{font-size:28px;font-weight:700;color:#4285f4;line-height:1}
+.reviewBtn:hover,.continueBtn:hover,.homeBtn:hover{transform:translateY(-1px)}
+.continueBtn{margin-top:13px;background:transparent;border:1px solid var(--gold);color:var(--white);justify-content:center;gap:12px}
+.arrow{color:var(--gold2);font-size:20px}
+.bottomNote{margin-top:auto;text-align:center;font-size:10px;letter-spacing:.17em;color:#ddd8cd;padding-top:28px}
+.bottomNote:before,.bottomNote:after{content:"";display:inline-block;width:32px;height:1px;background:var(--gold);vertical-align:middle;margin:0 10px}
+.wheelTitle{text-align:center;margin:5px 0 4px}
+.wheelTitle h1{font:600 28px Montserrat;margin:0;letter-spacing:.08em;text-transform:uppercase}
+.wheelArea{position:relative;width:min(78vw,335px);aspect-ratio:1;margin:14px auto 22px}
+canvas{width:100%;height:100%;border-radius:50%;transition:transform 4.8s cubic-bezier(.12,.72,.12,1);filter:drop-shadow(0 0 10px rgba(217,183,123,.3))}
+.pointer{position:absolute;top:-2px;left:50%;transform:translateX(-50%);z-index:4;width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:29px solid var(--gold2);filter:drop-shadow(0 3px 3px #000)}
+.spin{
+ position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;
+ width:92px;height:92px;border-radius:50%;border:4px solid #2b2a25;
+ background:radial-gradient(circle,#171813 55%,#0d0e0c);
+ color:var(--cream);font:600 17px Montserrat;letter-spacing:.16em;cursor:pointer;
+ box-shadow:0 0 0 2px rgba(217,183,123,.65),0 10px 25px #000b;
+}
+.participation{border:1px solid rgba(245,234,215,.38);border-radius:30px;padding:12px 18px;width:92%;display:flex;justify-content:center;gap:12px;align-items:center;font-size:12px;color:#ddd8cd;margin-top:4px}
+.people{font-size:18px;color:var(--gold2)}
+.wheelFoot{margin-top:auto;text-align:center;font-size:10px;letter-spacing:.24em;color:#e6dfd3}
+.wheelFoot:before,.wheelFoot:after{content:"";display:inline-block;width:27px;height:1px;background:var(--gold);vertical-align:middle;margin:0 12px}
+.result{text-align:center;width:100%;margin-top:25px}
+.beer{width:180px;height:245px;margin:0 auto 20px;position:relative;display:flex;align-items:center;justify-content:center}
+.beer:before{content:"";width:80px;height:180px;border-radius:14px 14px 26px 26px;background:linear-gradient(90deg,#a96512,#f4c55e 48%,#bd7817);box-shadow:0 5px 28px #dca13b55;position:absolute;top:35px}
+.beer:after{content:"";width:94px;height:42px;border-radius:50%;background:linear-gradient(#fffdf5,#d8d0bd);position:absolute;top:19px;box-shadow:0 2px 8px #fff6}
+.beerLogo{position:relative;z-index:2;margin-top:45px;color:#201a10;font:700 11px Montserrat;text-align:center;width:72px}
+.result .eyebrow{letter-spacing:.3em}
+.result h1{font:700 34px Montserrat;letter-spacing:.08em;margin:10px 0 8px}
+.resultLine{height:2px;width:34px;background:var(--gold);margin:17px auto 24px}
+.redeem{border:1px solid rgba(245,234,215,.28);border-radius:17px;padding:17px 14px;font-size:13px;line-height:1.5;color:#ded9cf;background:#0d0e0caa}
+.homeBtn{margin-top:28px;background:linear-gradient(180deg,#efd29d,#d8b87d);color:#11120f;border:0;justify-content:center;gap:15px}
+@media(max-height:720px){.content{padding:22px 22px}.hero{margin-top:25px}.hero .thin{font-size:31px}.hero .strong{font-size:34px}.wheelArea{width:min(68vw,285px)}}
+</style>
+</head>
+<body>
+<div class="app"><div class="panel"><div class="content">
+<header class="header">
+  <div class="menu"><i></i><i></i><i></i></div>
+  <div class="logoMark">3</div>
+  <div class="logoName">3 BRASSEURS</div>
+  <div class="location">TOURVILLE-LA-RIVIÈRE</div>
+  <div class="sep"></div>
+</header>
+
+<section id="welcome" class="screen active">
+  <div class="hero"><div class="thin">VOTRE AVIS</div><div class="strong">COMPTE</div><div class="shortline"></div>
+  <div class="copy">Vous avez passé un bon moment<br>chez 3 Brasseurs ?<br><br>Partagez votre expérience<br>sur Google.</div></div>
+  <button class="reviewBtn" onclick="openReview()"><span class="g">G</span><span>Laisser un avis<br>sur Google</span><span class="arrow">→</span></button>
+  <button class="continueBtn" onclick="show('game')">Continuer vers la roue <span class="arrow">→</span></button>
+  <div class="bottomNote">MERCI POUR VOTRE SOUTIEN</div>
+</section>
+
+<section id="game" class="screen">
+  <div class="wheelTitle"><h1>LA ROUE DES 3 BRASSEURS</h1></div>
+  <div class="wheelArea"><div class="pointer"></div><canvas id="wheel" width="700" height="700"></canvas><button id="spin" class="spin">SPIN</button></div>
+  <div class="participation"><span class="people">♙♙</span> 1 participation par personne</div>
+  <div class="wheelFoot">TENTEZ VOTRE CHANCE</div>
+</section>
+
+<section id="result" class="screen">
+ <div class="result">
+  <div class="beer"><div class="beerLogo">3<br>BRASSEURS</div></div>
+  <div class="eyebrow">VOUS AVEZ GAGNÉ</div><h1 id="prize">BIÈRE 25 CL</h1><div class="resultLine"></div>
+  <div class="redeem">Présentez simplement cet écran à l'encaissement pour récupérer votre gain.</div>
+  <button class="homeBtn" onclick="show('welcome')">⌂ &nbsp; Retour à l'accueil &nbsp; →</button>
+ </div>
+</section>
+</div></div></div>
+
+<script>
+const REVIEW_URL="https://search.google.com/local/writereview?placeid=ChIJT4SU_4Uh4UcR1AbubgSVa-Y";
+const prizes=[
+ {label:"BIÈRE 25 CL",weight:15},{label:"BOISSON CHAUDE",weight:15},
+ {label:"1 SHOT AU CHOIX",weight:15},{label:"REMISE DE 5 €",weight:5},
+ {label:"COCA OU FUZE TEA",weight:20},{label:"PAS DE GAIN",weight:30}
+];
+const colors=["#e2c48f","#171915","#d5b47b","#20221d","#36503c","#171915"];
+const canvas=document.getElementById("wheel"),ctx=canvas.getContext("2d");
+let rotation=0,busy=false;
+function drawWheel(){
+ let a=-Math.PI/2;
+ prizes.forEach((p,i)=>{
+  const s=2*Math.PI*p.weight/100;
+  ctx.beginPath();ctx.moveTo(350,350);ctx.arc(350,350,338,a,a+s);ctx.closePath();
+  ctx.fillStyle=colors[i];ctx.fill();ctx.strokeStyle="rgba(245,234,215,.42)";ctx.lineWidth=3;ctx.stroke();
+  const m=a+s/2;ctx.save();ctx.translate(350+Math.cos(m)*220,350+Math.sin(m)*220);ctx.rotate(m+Math.PI/2);
+  ctx.fillStyle=i===0||i===2?"#15150f":"#f6eee0";ctx.textAlign="center";ctx.font="600 20px DM Sans";
+  const parts=p.label.split(" "); const lines=parts.length>2?[parts.slice(0,2).join(" "),parts.slice(2).join(" ")]:[p.label];
+  lines.forEach((t,j)=>ctx.fillText(t,0,(j-(lines.length-1)/2)*25));ctx.restore();a+=s;
+ });
+}
+drawWheel();
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active")}
+function openReview(){window.open(REVIEW_URL,"_blank","noopener")}
+function pick(){let n=Math.random()*100;for(const p of prizes){n-=p.weight;if(n<0)return p}return prizes[5]}
+document.getElementById("spin").onclick=()=>{
+ if(busy||localStorage.getItem("3b_played")==="1")return;
+ busy=true;const p=pick(),idx=prizes.indexOf(p);
+ const before=prizes.slice(0,idx).reduce((s,x)=>s+x.weight,0);
+ const center=-Math.PI/2+2*Math.PI*(before+p.weight/2)/100;
+ const target=-center,current=((rotation%(2*Math.PI))+2*Math.PI)%(2*Math.PI);
+ rotation+=8*2*Math.PI+target-current;canvas.style.transform=`rotate(${rotation}rad)`;
+ setTimeout(()=>{localStorage.setItem("3b_played","1");document.getElementById("prize").textContent=p.label;
+ document.querySelector("#result .eyebrow").textContent=p.label==="PAS DE GAIN"?"CETTE FOIS-CI":"VOUS AVEZ GAGNÉ";show("result");busy=false},4900);
+};
+</script>
+</body>
+</html>
