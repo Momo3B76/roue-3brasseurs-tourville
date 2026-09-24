@@ -2,152 +2,198 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<title>3 Brasseurs — Roue de la chance</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080a08">
+<title>3 Brasseurs Tourville — Roue de la chance</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;background:#050505;color:#fff;font-family:Arial,Helvetica,sans-serif}body{min-height:100vh;overflow-x:hidden}.app{min-height:100vh;display:flex;justify-content:center;align-items:flex-start;padding:18px 0;background:#070706}.panel{width:418px;height:1254px;position:relative;overflow:hidden;background:#090a09 center/cover no-repeat;border-radius:10px;box-shadow:0 20px 80px rgba(0,0,0,.65)}
-.screen{display:none;position:absolute;inset:0}.screen.active{display:block}.review{background:url('panel-left-bg.jpg') center top/100% 100% no-repeat}.wheelScreen{width:415px;background:url('panel-center-bg.jpg') center top/100% 100% no-repeat}.result{background:url('panel-right-bg.jpg') center top/100% 100% no-repeat}
-/* Invisible hit zones sit exactly over the buttons already present in the reference artwork. */
-.hit{position:absolute;background:transparent;border:0;cursor:pointer}.reviewLink{left:31px;top:665px;width:355px;height:86px}.continue{left:31px;top:760px;width:355px;height:76px}.spinHit{left:145px;top:500px;width:125px;height:125px;border-radius:50%}.homeHit{left:48px;top:912px;width:320px;height:76px}
-/* The reference artwork is the visual base. Only the functional wheel ring is animated. */
-.wheelMask{position:absolute;left:0;top:337px;width:415px;height:450px;border-radius:50%;background:#0a0c0b;box-shadow:0 0 28px rgba(238,190,111,.10);z-index:2}.wheelRing{position:absolute;left:0;top:337px;width:415px;height:450px;z-index:3;overflow:visible;pointer-events:none}.wheelRing img{position:absolute;left:0;top:0;width:415px;height:1254px;transform-origin:207px 223px;clip-path:circle(207px at 207px 223px);transition:transform 5.5s cubic-bezier(.11,.76,.14,1);filter:drop-shadow(0 0 7px rgba(238,190,111,.42))}.wheelCenter{position:absolute;left:0;top:337px;width:415px;height:450px;z-index:4;pointer-events:none}.wheelCenter img{position:absolute;left:0;top:0;width:415px;height:1254px;clip-path:circle(65px at 207px 223px)}.pointer{position:absolute;left:191px;top:334px;width:32px;height:43px;z-index:5;clip-path:polygon(0 0,100% 0,50% 100%);background:#f2d2a5;filter:drop-shadow(0 3px 5px #000)}
-/* Dynamic result text sits over the printed text while keeping the original composition. */
-.resultDynamic{position:absolute;left:0;right:0;top:658px;text-align:center;z-index:4}.resultTitle{font-size:18px;letter-spacing:7px;font-weight:300;margin:0 0 9px}.resultPrize{font-size:37px;line-height:1.03;font-weight:900;letter-spacing:1px;text-transform:uppercase;text-shadow:0 1px 1px #000}.resultCover{position:absolute;left:55px;top:646px;width:305px;height:116px;background:rgba(7,8,7,.92);border-radius:4px;z-index:3}.resultCover.lost{height:155px}.claimCover{position:absolute;left:54px;top:779px;width:310px;height:112px;background:rgba(7,8,7,.04);z-index:3}.lostMessage{display:none;position:absolute;left:45px;top:780px;width:325px;padding:18px;border:1px solid #d8b27a;border-radius:25px;text-align:center;font-size:15px;line-height:1.5;background:rgba(7,8,7,.9);z-index:5}.result.lose .lostMessage{display:block}.result.lose .claimCover{display:none}
-@media(max-width:600px){.app{padding:0}.panel,.wheelScreen{width:100vw;height:calc(100vw * 1254 / 418);max-width:418px}.wheelScreen{height:calc(100vw * 1254 / 415)}.hit.reviewLink{left:7.4%;width:85%}.hit.continue{left:7.4%;width:85%}.wheelMask,.wheelRing,.wheelCenter{transform-origin:top left}.wheelRing img,.wheelCenter img{width:100%;height:auto}.pointer{transform:scale(calc(100vw / 415));transform-origin:top left}.resultDynamic{transform:scale(calc(100vw / 418));transform-origin:top center}.resultCover{transform:scale(calc(100vw / 418));transform-origin:top left}.lostMessage{transform:scale(calc(100vw / 418));transform-origin:top left}}
-
-/* === MOBILE PRIORITY OVERRIDES === */
-html { background:#050706; }
-body {
-  margin:0;
-  min-height:100svh;
-  min-height:100dvh;
-  background:#050706;
-  overflow-x:hidden;
-  -webkit-text-size-adjust:100%;
-  touch-action:manipulation;
+:root{
+  --bg:#080a08;--cream:#f2d2a5;--cream2:#e5bb7f;--white:#f7f5f0;
+  --green:#315f4c;--coral:#c86d5b;--ink:#111411;
 }
-button, a { -webkit-tap-highlight-color:transparent; }
-button { min-height:48px; touch-action:manipulation; }
-
-/* The experience is designed first for a phone opened from a table QR code. */
-.app, .shell, .stage, main {
-  width:100%;
-  max-width:480px;
-  margin-inline:auto;
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#050706;color:var(--white);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+body{min-height:100svh;overflow-x:hidden;-webkit-text-size-adjust:100%;touch-action:manipulation}
+button,a{-webkit-tap-highlight-color:transparent}
+button{font:inherit}
+.app{width:100%;min-height:100svh;margin:auto;background:#070907}
+.screen{
+  display:none;position:relative;width:100%;min-height:100svh;overflow:hidden;
+  padding:max(18px,env(safe-area-inset-top)) 22px max(22px,env(safe-area-inset-bottom));
+  isolation:isolate
 }
-.screen {
-  min-height:100svh;
-  min-height:100dvh;
-  width:100%;
-  box-sizing:border-box;
-  overflow:hidden;
-  background-position:center center;
-  background-repeat:no-repeat;
-  background-size:cover;
+.screen.active{display:flex;flex-direction:column}
+.screen::before{
+  content:"";position:absolute;inset:-18px;z-index:-3;background:center/cover no-repeat;
+  filter:blur(3px) saturate(.9);transform:scale(1.05)
 }
-img { max-width:100%; height:auto; }
+.review::before{background-image:url("panel-left-bg.jpg")}
+.wheelScreen::before{background-image:url("panel-center-bg.jpg")}
+.result::before{background-image:url("panel-right-bg.jpg")}
+.screen::after{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(180deg,rgba(4,6,5,.36),rgba(5,7,6,.70) 48%,rgba(4,6,5,.52))}
+.frame{position:absolute;inset:8px;border:1px solid rgba(242,210,165,.64);border-radius:10px;pointer-events:none}
+.header{display:flex;align-items:flex-start;justify-content:center;min-height:126px;position:relative}
+.brand{width:174px;height:auto;object-fit:contain;filter:drop-shadow(0 3px 12px #000);margin-top:3px}
+.menu{position:absolute;right:4px;top:12px;width:30px;height:24px;display:grid;align-content:space-between}
+.menu i{height:2px;background:var(--cream);border-radius:4px;display:block}
+.goldline{width:46px;height:2px;background:var(--cream2);margin:18px auto}
+.reviewContent{display:flex;flex:1;flex-direction:column;justify-content:center;text-align:center;padding:0 7px 44px}
+.eyebrow{font-size:clamp(31px,9.2vw,43px);font-weight:300;letter-spacing:.16em;line-height:1.05;margin:0}
+.big{font-size:clamp(40px,11.5vw,56px);font-weight:900;line-height:1;margin:8px 0 0;color:#f5d6aa}
+.copy{font-size:17px;line-height:1.55;margin:0 auto 15px;max-width:320px;text-shadow:0 2px 8px #000}
+.btn{width:100%;min-height:70px;border-radius:999px;border:1px solid rgba(242,210,165,.72);display:flex;align-items:center;justify-content:center;gap:15px;padding:0 20px;text-decoration:none;color:white;background:rgba(6,9,7,.76);font-weight:700;font-size:16px;cursor:pointer;backdrop-filter:blur(5px)}
+.btn+.btn{margin-top:15px}
+.btn.primary{border-color:#d5a762}
+.googleG{font-size:31px;font-weight:900;color:#4285f4;margin-right:auto}
+.arrow{color:#efc27e;font-size:27px;margin-left:auto}
+.footerNote{text-align:center;font-size:10px;letter-spacing:.26em;color:#eee;margin-top:34px}
 
-/* Avoid desktop scaling tricks on phones */
-@media (max-width: 600px) {
-  body { width:100%; }
-  .app, .shell, .stage, main {
-    max-width:none;
-    width:100%;
-    min-height:100svh;
-    min-height:100dvh;
-  }
-  .screen {
-    border-radius:0 !important;
-    border-left:0 !important;
-    border-right:0 !important;
-    box-shadow:none !important;
-  }
+/* WHEEL */
+.wheelHeader{min-height:118px}
+.wheelArea{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding-bottom:18px}
+.wheelWrap{position:relative;width:min(92vw,410px);aspect-ratio:1;margin-top:-4px;filter:drop-shadow(0 0 13px rgba(238,184,105,.35))}
+.pointer{position:absolute;z-index:8;left:50%;top:-12px;transform:translateX(-50%);width:44px;height:48px;background:linear-gradient(#f6dcb2,#d9a966);clip-path:polygon(0 0,100% 0,50% 100%);filter:drop-shadow(0 3px 4px #000)}
+.rotor{position:absolute;inset:0;border-radius:50%;transition:transform 5.4s cubic-bezier(.10,.72,.12,1);will-change:transform}
+.wheelSvg{width:100%;height:100%;display:block}
+.spinBtn{
+ position:absolute;z-index:9;left:50%;top:50%;transform:translate(-50%,-50%);
+ width:29%;aspect-ratio:1;border-radius:50%;border:3px solid #f1cc96;
+ background:radial-gradient(circle at 40% 35%,#24231d,#070907 65%);color:#f5d8ad;
+ box-shadow:0 0 0 4px rgba(12,13,10,.8),0 0 18px rgba(238,184,105,.65);
+ font-size:clamp(17px,5vw,24px);font-weight:700;letter-spacing:.22em;cursor:pointer
 }
+.spinBtn small{display:block;font-size:18px;letter-spacing:0;margin-top:5px}
+.onePlay{margin-top:28px;border:1px solid rgba(227,184,120,.65);border-radius:999px;padding:15px 24px;background:rgba(5,8,6,.68);font-size:13px;display:flex;gap:12px;align-items:center}
+.try{text-align:center;margin-top:28px;font-size:10px;letter-spacing:.30em}
+.try:before,.try:after{content:"";display:inline-block;width:32px;height:1px;background:#d9ad6e;vertical-align:middle;margin:0 14px}
 
-/* On tablets/desktops, show a centered phone-like preview instead of stretching artwork. */
-@media (min-width: 601px) {
-  body {
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-  }
-  .app, .shell, .stage, main {
-    width:min(100%, 430px);
-    min-height:100dvh;
-  }
-  .screen { min-height:100dvh; }
+/* RESULT */
+.resultContent{display:flex;flex:1;flex-direction:column;align-items:center;text-align:center;justify-content:center;padding:0 12px 28px}
+.beer{height:min(39vh,360px);width:auto;max-width:68vw;object-fit:contain;filter:drop-shadow(0 12px 22px #000);margin:-8px 0 8px}
+.winEyebrow{font-size:18px;letter-spacing:.28em;font-weight:400;margin:2px 0 10px}
+.prize{font-size:clamp(34px,9vw,47px);font-weight:900;line-height:1.03;text-transform:uppercase;margin:0;max-width:360px}
+.claim{width:100%;margin-top:25px;padding:17px 18px;border:1px solid rgba(231,187,122,.72);border-radius:24px;background:rgba(7,9,7,.74);font-size:14px;line-height:1.45}
+.home{margin-top:24px;background:linear-gradient(90deg,#e8bd80,#f4d4a7);color:#15140f;border:0;min-height:62px}
+.lose .beer{display:none}.lose .resultContent{padding-top:120px}.lose .winEyebrow{font-size:23px}.lose .prize{font-size:42px}
+
+@media(min-width:600px){
+ body{display:flex;justify-content:center}
+ .app{width:430px;min-height:100dvh;box-shadow:0 0 80px #000}
+ .screen{min-height:100dvh}
 }
-
-/* Safe areas for iPhone notches/home indicator */
-@supports (padding: max(0px)) {
-  .screen {
-    padding-top:max(env(safe-area-inset-top), 0px);
-    padding-bottom:max(env(safe-area-inset-bottom), 0px);
-  }
+@media(max-height:720px){
+ .header,.wheelHeader{min-height:92px}.brand{width:138px}
+ .reviewContent{padding-bottom:16px}.copy{font-size:15px}.btn{min-height:60px}
+ .wheelWrap{width:min(78vh,88vw,370px)}.onePlay{margin-top:15px}.try{margin-top:14px}
+ .beer{height:31vh}.claim{margin-top:14px}.home{margin-top:14px}
 }
-
 </style>
 </head>
 <body>
-<div class="app">
-  <main class="panel" id="panel">
-    <section class="screen review active" id="review">
-      <a class="hit reviewLink" href="https://search.google.com/local/writereview?placeid=ChIJT4SU_4Uh4UcR1AbubgSVa-Y" target="_blank" rel="noopener" aria-label="Laisser un avis Google"></a>
-      <button class="hit continue" id="continueBtn" aria-label="Continuer vers la roue"></button>
-    </section>
+<main class="app">
+<section class="screen review active" id="review">
+ <div class="frame"></div>
+ <header class="header"><img class="brand" src="logo.png" alt="3 Brasseurs Tourville-la-Rivière"><div class="menu"><i></i><i></i><i></i></div></header>
+ <div class="reviewContent">
+   <h1 class="eyebrow">VOTRE AVIS</h1><div class="big">COMPTE</div><div class="goldline"></div>
+   <p class="copy">Vous avez passé un bon moment<br>chez 3 Brasseurs ?</p>
+   <p class="copy">Partagez votre expérience<br>sur Google.</p>
+   <a class="btn" href="https://search.google.com/local/writereview?placeid=ChIJT4SU_4Uh4UcR1AbubgSVa-Y" target="_blank" rel="noopener"><span class="googleG">G</span><span>Laisser un avis<br>sur Google</span><span class="arrow">→</span></a>
+   <button class="btn primary" id="continueBtn"><span>Continuer vers la roue</span><span class="arrow">→</span></button>
+   <div class="footerNote">MERCI POUR VOTRE SOUTIEN</div>
+ </div>
+</section>
 
-    <section class="screen wheelScreen" id="wheelScreen">
-      <div class="wheelMask"></div>
-      <div class="wheelRing"><img id="wheelImg" src="wheel-ring.png" alt=""></div>
-      <div class="wheelCenter"><img src="wheel-center.png" alt=""></div>
-      <div class="pointer"></div>
-      <button class="hit spinHit" id="spinHit" aria-label="Faire tourner la roue"></button>
-    </section>
+<section class="screen wheelScreen" id="wheelScreen">
+ <div class="frame"></div>
+ <header class="header wheelHeader"><img class="brand" src="logo.png" alt="3 Brasseurs Tourville-la-Rivière"><div class="menu"><i></i><i></i><i></i></div></header>
+ <div class="wheelArea">
+  <div class="wheelWrap">
+   <div class="pointer"></div>
+   <div class="rotor" id="rotor">
+    <svg class="wheelSvg" viewBox="0 0 400 400" role="img" aria-label="Roue de la chance à six parts égales">
+      <defs>
+       <filter id="glow"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <circle cx="200" cy="200" r="196" fill="#0b0d0b" stroke="#efbd7c" stroke-width="5" filter="url(#glow)"/>
+      <path d="M200 200 L102 30.3 A196 196 0 0 1 298 30.3 Z" fill="#eed1a4"/>
+      <path d="M200 200 L298 30.3 A196 196 0 0 1 396 200 Z" fill="#20221f"/>
+      <path d="M200 200 L396 200 A196 196 0 0 1 298 369.7 Z" fill="#e4bd8b"/>
+      <path d="M200 200 L298 369.7 A196 196 0 0 1 102 369.7 Z" fill="#c96f5d"/>
+      <path d="M200 200 L102 369.7 A196 196 0 0 1 4 200 Z" fill="#35634f"/>
+      <path d="M200 200 L4 200 A196 196 0 0 1 102 30.3 Z" fill="#1d201d"/>
+      <g stroke="#f3dfc1" stroke-width="1.2" opacity=".7">
+       <line x1="200" y1="200" x2="102" y2="30.3"/><line x1="200" y1="200" x2="298" y2="30.3"/>
+       <line x1="200" y1="200" x2="396" y2="200"/><line x1="200" y1="200" x2="298" y2="369.7"/>
+       <line x1="200" y1="200" x2="102" y2="369.7"/><line x1="200" y1="200" x2="4" y2="200"/>
+      </g>
+      <g text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="600">
+       <text x="200" y="82" fill="#111">🍺</text><text x="200" y="105" fill="#111">Bière 25 cl</text>
+       <text x="305" y="133" fill="#fff">☕</text><text x="311" y="157" fill="#fff">Boisson chaude</text>
+       <text x="309" y="249" fill="#111">🥃</text><text x="310" y="274" fill="#111">1 shot au choix</text>
+       <text x="200" y="313" fill="#fff">🎟</text><text x="200" y="338" fill="#fff">Remise de 5 €</text>
+       <text x="91" y="250" fill="#fff">🥤</text><text x="90" y="274" fill="#fff">Coca ou Fuze Tea</text>
+       <text x="91" y="133" fill="#fff">✕</text><text x="90" y="157" fill="#fff">Pas de gain</text>
+      </g>
+    </svg>
+   </div>
+   <button class="spinBtn" id="spinBtn" aria-label="Faire tourner la roue">SPIN<small>↻</small></button>
+  </div>
+  <div class="onePlay"><span>♙♙♙</span><span>1 participation par personne</span></div>
+  <div class="try">TENTEZ VOTRE CHANCE</div>
+ </div>
+</section>
 
-    <section class="screen result" id="result">
-      <div class="resultCover"></div>
-      <div class="resultDynamic"><div class="resultTitle" id="resultTitle">VOUS AVEZ GAGNÉ</div><div class="resultPrize" id="resultPrize">BIÈRE 25 CL</div></div>
-      <div class="claimCover"></div>
-      <div class="lostMessage" id="lostMessage">Cette fois, pas de gain.<br>Merci d’avoir tenté votre chance !</div>
-      <button class="hit homeHit" id="homeHit" aria-label="Retour à l'accueil"></button>
-    </section>
-  </main>
-</div>
+<section class="screen result" id="result">
+ <div class="frame"></div>
+ <header class="header"><img class="brand" src="logo.png" alt="3 Brasseurs Tourville-la-Rivière"><div class="menu"><i></i><i></i><i></i></div></header>
+ <div class="resultContent">
+  <img class="beer" src="beer.png" alt="Bière 3 Brasseurs">
+  <div class="winEyebrow" id="resultTitle">VOUS AVEZ GAGNÉ</div>
+  <h2 class="prize" id="resultPrize">BIÈRE 25 CL</h2>
+  <div class="goldline"></div>
+  <div class="claim" id="claim">📱 &nbsp; Présentez simplement cet écran à l’encaissement pour récupérer votre gain.</div>
+  <button class="btn home" id="homeBtn">⌂ &nbsp;&nbsp; Retour à l’accueil <span class="arrow">→</span></button>
+ </div>
+</section>
+</main>
+
 <script>
 const prizes=[
- {name:'Bière 25 cl',weight:15,win:true},
- {name:'Boisson chaude',weight:15,win:true},
- {name:'1 shot au choix',weight:15,win:true},
- {name:'Remise de 5 €',weight:5,win:true},
- {name:'Coca ou Fuze Tea',weight:20,win:true},
- {name:'Pas de gain',weight:30,win:false}
+ {name:"Bière 25 cl",weight:15,win:true},
+ {name:"Boisson chaude",weight:15,win:true},
+ {name:"1 shot au choix",weight:15,win:true},
+ {name:"Remise de 5 €",weight:5,win:true},
+ {name:"Coca ou Fuze Tea",weight:20,win:true},
+ {name:"Pas de gain",weight:30,win:false}
 ];
-const TAU=Math.PI*2, sector=TAU/6;
+const screens=[...document.querySelectorAll(".screen")];
+const rotor=document.getElementById("rotor");
+const spinBtn=document.getElementById("spinBtn");
 let rotation=0,spinning=false;
-function weightedPick(){let total=prizes.reduce((s,p)=>s+p.weight,0),x=Math.random()*total;for(let i=0;i<prizes.length;i++){x-=prizes[i].weight;if(x<0)return i}return 5}
-function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active')}
-function spin(){
- if(spinning||localStorage.getItem('3b_played')==='1')return;
- spinning=true;
- const idx=weightedPick();
- const current=((rotation%TAU)+TAU)%TAU;
- const sectorCenter=-Math.PI/2+(idx+.5)*sector;
- const target=-sectorCenter;
- let delta=target-current;while(delta<0)delta+=TAU;
- rotation+=TAU*7+delta;
- document.getElementById('wheelImg').style.transform=`rotate(${rotation}rad)`;
+function show(id){screens.forEach(s=>s.classList.toggle("active",s.id===id));window.scrollTo(0,0)}
+function pick(){let n=Math.random()*100;for(let i=0;i<prizes.length;i++){n-=prizes[i].weight;if(n<0)return i}return 5}
+document.getElementById("continueBtn").addEventListener("click",()=>show("wheelScreen"));
+spinBtn.addEventListener("click",()=>{
+ if(spinning)return;
+ spinning=true;spinBtn.disabled=true;
+ const idx=pick();
+ // Six equal visual sectors. Sector 0 is centered at 12 o'clock.
+ const sector=60;
+ const current=((rotation%360)+360)%360;
+ const target=(360-(idx*sector))%360;
+ let delta=(target-current+360)%360;
+ rotation += 7*360 + delta;
+ rotor.style.transform=`rotate(${rotation}deg)`;
  setTimeout(()=>{
-   localStorage.setItem('3b_played','1');
    const p=prizes[idx];
-   document.getElementById('resultTitle').textContent=p.win?'VOUS AVEZ GAGNÉ':'DOMMAGE…';
-   document.getElementById('resultPrize').textContent=p.name.toUpperCase();
-   document.getElementById('result').classList.toggle('lose',!p.win);
-   show('result');spinning=false;
- },5600)
-}
-document.getElementById('continueBtn').onclick=()=>show('wheelScreen');
-document.getElementById('spinHit').onclick=spin;
-document.getElementById('homeHit').onclick=()=>show('review');
+   document.getElementById("result").classList.toggle("lose",!p.win);
+   document.getElementById("resultTitle").textContent=p.win?"VOUS AVEZ GAGNÉ":"DOMMAGE…";
+   document.getElementById("resultPrize").textContent=p.name.toUpperCase();
+   document.getElementById("claim").textContent=p.win?"📱  Présentez simplement cet écran à l’encaissement pour récupérer votre gain.":"Merci d’avoir tenté votre chance !";
+   show("result");spinning=false;spinBtn.disabled=false;
+ },5450);
+});
+document.getElementById("homeBtn").addEventListener("click",()=>show("review"));
 </script>
 </body>
 </html>
