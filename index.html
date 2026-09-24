@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <title>3 Brasseurs — Roue de la chance</title>
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:#050505;color:#fff;font-family:Arial,Helvetica,sans-serif}body{min-height:100vh;overflow-x:hidden}.app{min-height:100vh;display:flex;justify-content:center;align-items:flex-start;padding:18px 0;background:#070706}.panel{width:418px;height:1254px;position:relative;overflow:hidden;background:#090a09 center/cover no-repeat;border-radius:10px;box-shadow:0 20px 80px rgba(0,0,0,.65)}
@@ -14,6 +14,78 @@
 /* Dynamic result text sits over the printed text while keeping the original composition. */
 .resultDynamic{position:absolute;left:0;right:0;top:658px;text-align:center;z-index:4}.resultTitle{font-size:18px;letter-spacing:7px;font-weight:300;margin:0 0 9px}.resultPrize{font-size:37px;line-height:1.03;font-weight:900;letter-spacing:1px;text-transform:uppercase;text-shadow:0 1px 1px #000}.resultCover{position:absolute;left:55px;top:646px;width:305px;height:116px;background:rgba(7,8,7,.92);border-radius:4px;z-index:3}.resultCover.lost{height:155px}.claimCover{position:absolute;left:54px;top:779px;width:310px;height:112px;background:rgba(7,8,7,.04);z-index:3}.lostMessage{display:none;position:absolute;left:45px;top:780px;width:325px;padding:18px;border:1px solid #d8b27a;border-radius:25px;text-align:center;font-size:15px;line-height:1.5;background:rgba(7,8,7,.9);z-index:5}.result.lose .lostMessage{display:block}.result.lose .claimCover{display:none}
 @media(max-width:600px){.app{padding:0}.panel,.wheelScreen{width:100vw;height:calc(100vw * 1254 / 418);max-width:418px}.wheelScreen{height:calc(100vw * 1254 / 415)}.hit.reviewLink{left:7.4%;width:85%}.hit.continue{left:7.4%;width:85%}.wheelMask,.wheelRing,.wheelCenter{transform-origin:top left}.wheelRing img,.wheelCenter img{width:100%;height:auto}.pointer{transform:scale(calc(100vw / 415));transform-origin:top left}.resultDynamic{transform:scale(calc(100vw / 418));transform-origin:top center}.resultCover{transform:scale(calc(100vw / 418));transform-origin:top left}.lostMessage{transform:scale(calc(100vw / 418));transform-origin:top left}}
+
+/* === MOBILE PRIORITY OVERRIDES === */
+html { background:#050706; }
+body {
+  margin:0;
+  min-height:100svh;
+  min-height:100dvh;
+  background:#050706;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+  touch-action:manipulation;
+}
+button, a { -webkit-tap-highlight-color:transparent; }
+button { min-height:48px; touch-action:manipulation; }
+
+/* The experience is designed first for a phone opened from a table QR code. */
+.app, .shell, .stage, main {
+  width:100%;
+  max-width:480px;
+  margin-inline:auto;
+}
+.screen {
+  min-height:100svh;
+  min-height:100dvh;
+  width:100%;
+  box-sizing:border-box;
+  overflow:hidden;
+  background-position:center center;
+  background-repeat:no-repeat;
+  background-size:cover;
+}
+img { max-width:100%; height:auto; }
+
+/* Avoid desktop scaling tricks on phones */
+@media (max-width: 600px) {
+  body { width:100%; }
+  .app, .shell, .stage, main {
+    max-width:none;
+    width:100%;
+    min-height:100svh;
+    min-height:100dvh;
+  }
+  .screen {
+    border-radius:0 !important;
+    border-left:0 !important;
+    border-right:0 !important;
+    box-shadow:none !important;
+  }
+}
+
+/* On tablets/desktops, show a centered phone-like preview instead of stretching artwork. */
+@media (min-width: 601px) {
+  body {
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+  }
+  .app, .shell, .stage, main {
+    width:min(100%, 430px);
+    min-height:100dvh;
+  }
+  .screen { min-height:100dvh; }
+}
+
+/* Safe areas for iPhone notches/home indicator */
+@supports (padding: max(0px)) {
+  .screen {
+    padding-top:max(env(safe-area-inset-top), 0px);
+    padding-bottom:max(env(safe-area-inset-bottom), 0px);
+  }
+}
+
 </style>
 </head>
 <body>
