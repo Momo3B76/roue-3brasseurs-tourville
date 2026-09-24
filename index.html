@@ -6,7 +6,7 @@
 <title>3 Brasseurs — Roue de la chance</title>
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:#050505;color:#fff;font-family:Arial,Helvetica,sans-serif}body{min-height:100vh;overflow-x:hidden}.app{min-height:100vh;display:flex;justify-content:center;align-items:flex-start;padding:18px 0;background:#070706}.panel{width:418px;height:1254px;position:relative;overflow:hidden;background:#090a09 center/cover no-repeat;border-radius:10px;box-shadow:0 20px 80px rgba(0,0,0,.65)}
-.screen{display:none;position:absolute;inset:0}.screen.active{display:block}.review{background:url('assets/panel-left-bg.jpg') center top/100% 100% no-repeat}.wheelScreen{width:415px;background:url('assets/panel-center-bg.jpg') center top/100% 100% no-repeat}.result{background:url('assets/panel-right-bg.jpg') center top/100% 100% no-repeat}
+.screen{display:none;position:absolute;inset:0}.screen.active{display:block}.review{background:url('panel-left-bg.jpg') center top/100% 100% no-repeat}.wheelScreen{width:415px;background:url('panel-center-bg.jpg') center top/100% 100% no-repeat}.result{background:url('panel-right-bg.jpg') center top/100% 100% no-repeat}
 /* Invisible hit zones sit exactly over the buttons already present in the reference artwork. */
 .hit{position:absolute;background:transparent;border:0;cursor:pointer}.reviewLink{left:31px;top:665px;width:355px;height:86px}.continue{left:31px;top:760px;width:355px;height:76px}.spinHit{left:145px;top:500px;width:125px;height:125px;border-radius:50%}.homeHit{left:48px;top:912px;width:320px;height:76px}
 /* The reference artwork is the visual base. Only the functional wheel ring is animated. */
@@ -26,8 +26,8 @@
 
     <section class="screen wheelScreen" id="wheelScreen">
       <div class="wheelMask"></div>
-      <div class="wheelRing"><img id="wheelImg" src="assets/wheel-ring.png" alt=""></div>
-      <div class="wheelCenter"><img src="assets/wheel-center.png" alt=""></div>
+      <div class="wheelRing"><img id="wheelImg" src="wheel-ring.png" alt=""></div>
+      <div class="wheelCenter"><img src="wheel-center.png" alt=""></div>
       <div class="pointer"></div>
       <button class="hit spinHit" id="spinHit" aria-label="Faire tourner la roue"></button>
     </section>
